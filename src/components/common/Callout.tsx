@@ -1,17 +1,13 @@
-import type { PropsWithChildren } from "react";
-
 type Props = {
+  description: string;
   emoji?: string;
 };
 
-export default function Callout({
-  emoji = "📌",
-  children,
-}: PropsWithChildren<Props>) {
+export default function Callout({ emoji = "📌", description }: Props) {
   return (
     <div className="callout">
       <p>{emoji}</p>
-      <p>{children}</p>
+      <p>{description}</p>
     </div>
   );
 }
