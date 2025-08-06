@@ -1,17 +1,26 @@
-import type { PropsWithChildren } from "react";
-
 type Props = {
-  emoji?: string;
+  title: string;
+  parentPath?: string;
 };
 
-export default function Information({
-  emoji = "📌",
-  children,
-}: PropsWithChildren<Props>) {
+export default function Information({ title, parentPath }: Props) {
   return (
-    <div className="callout">
-      <p>{emoji}</p>
-      <p>{children}</p>
+    <div id="information">
+      <div className="flex between">
+        <h1 className="main">{title}</h1>
+        <div className="breadcrumb">
+          <div className="sub">🍞 Home</div>
+          <div className="arrow"></div>
+          {parentPath && (
+            <>
+              <div className="sub">{parentPath}</div>{" "}
+              <div className="arrow"></div>
+            </>
+          )}
+          <div className="sub">{title}</div>
+        </div>
+      </div>
+      <div className="line"></div>
     </div>
   );
 }

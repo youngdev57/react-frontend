@@ -437,7 +437,7 @@ h2.common-title {
 .breadcrumb .arrow {
   width: 12px;
   height: 12px;
-  background: url("../img/icon/icon-sub-nav-arrow.png") center center;
+  background: url("../assets/icon/icon-sub-nav-arrow.png") center center;
   background-size: 100% 100%;
 }
 .callout {
