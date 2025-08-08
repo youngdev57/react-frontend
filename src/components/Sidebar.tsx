@@ -1,82 +1,103 @@
 import "@/styles/components/Sidebar.css";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
+type MenuItem = {
+  name: string;
+  to?: string;
+  children?: { name: string; to: string }[];
+};
+
+const MENUS: MenuItem[] = [
+  {
+    name: "Dashboard",
+    to: "/dashboard",
+  },
+  {
+    name: "Modules",
+    to: "/modules",
+    children: [
+      { name: "Api", to: "/modules/api" },
+      { name: "Pager", to: "/modules/pager" },
+      { name: "File Manager", to: "/modules/file-manager" },
+      { name: "Thumbnail Manager", to: "/modules/thumbnail-manager" },
+      { name: "Region", to: "/modules/region" },
+    ],
+  },
+  {
+    name: "Common",
+    to: "/common",
+    children: [
+      { name: "Form", to: "/common/form" },
+      { name: "Grid", to: "/common/grid" },
+      { name: "UI", to: "/common/ui" },
+      { name: "Utils", to: "/common/utils" },
+    ],
+  },
+  {
+    name: "Templates",
+    to: "/templates",
+  },
+  {
+    name: "Libraries",
+    to: "/libraries",
+  },
+];
+
 export default function Sidebar() {
+  const [openMenus, setOpenMenus] = useState<Set<string>>(new Set());
+
+  const toggleMenu = (name: string) => {
+    setOpenMenus((prev) => {
+      const next = new Set(prev);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      return next;
+    });
+  };
+
   return (
     <div className="sidebar">
       <div className="logo-details">
         <span className="logo-name">YOUNGDEV57</span>
       </div>
       <ul className="nav-links">
-        <li>
-          <Link to="/dashboard">
-            <i className="bx bx-grid-alt"></i>
-            <span className="link-name">Dashboard</span>
-          </Link>
-        </li>
-        <li>
-          <div className="icon-link">
-            <Link to="/modules/api">
-              <i className="bx bx-grid-alt"></i>
-              <span className="link-name">Modules</span>
-            </Link>
-            <i className="bx bxs-chevron-down arrow"></i>
-          </div>
-          <ul className="sub-menu">
-            <li>
-              <Link to="/modules/api">Api</Link>
+        {MENUS.map((menu) => {
+          const hasChildren = !!menu.children?.length;
+          const isOpen = openMenus.has(menu.name);
+
+          return (
+            <li key={menu.name} className={isOpen ? "showMenu" : ""}>
+              {hasChildren ? (
+                <Link to="#">
+                  <div className="icon-link">
+                    <i className="bx bx-grid-alt"></i>
+                    <span className="link-name">{menu.name}</span>
+                    <i
+                      className="bx bxs-chevron-down arrow"
+                      onClick={() => toggleMenu(menu.name)}
+                    />
+                  </div>
+                </Link>
+              ) : (
+                <Link to={menu.to || "#"}>
+                  <i className="bx bx-grid-alt"></i>
+                  <span className="link-name">{menu.name}</span>
+                </Link>
+              )}
+
+              {hasChildren && (
+                <ul className="sub-menu">
+                  {menu.children!.map((child) => (
+                    <li key={child.to}>
+                      <Link to={child.to}>{child.name}</Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
-            <li>
-              <Link to="/modules/pager">Pager</Link>
-            </li>
-            <li>
-              <Link to="/modules/file-manager">File Manager</Link>
-            </li>
-            <li>
-              <Link to="/modules/thumbnail-manager">Thumbnail Manager</Link>
-            </li>
-            <li>
-              <Link to="/modules/region">Region</Link>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <div className="icon-link">
-            <Link to="#">
-              <i className="bx bx-grid-alt"></i>
-              <span className="link-name">Common</span>
-            </Link>
-            <i className="bx bxs-chevron-down arrow"></i>
-          </div>
-          <ul className="sub-menu">
-            <li>
-              <Link to="/common/form">Form</Link>
-            </li>
-            <li>
-              <Link to="/common/grid">Grid</Link>
-            </li>
-            <li>
-              <Link to="/common/ui">UI</Link>
-            </li>
-            <li>
-              <Link to="/common/util">Utils</Link>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <div className="icon-link">
-            <Link to="#">
-              <i className="bx bx-grid-alt"></i>
-              <span className="link-name">Templates</span>
-            </Link>
-            <i className="bx bxs-chevron-down arrow"></i>
-          </div>
-          <ul className="sub-menu">
-            <li>
-              <Link to="#">Form</Link>
-            </li>
-          </ul>
-        </li>
+          );
+        })}
       </ul>
     </div>
   );

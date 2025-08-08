@@ -74,7 +74,7 @@
 .sidebar .nav-links li .icon-link {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  width: 100%;
 }
 
 .sidebar.close .nav-links li .icon-link {
@@ -107,6 +107,7 @@
 }
 
 .sidebar .nav-links li a .link-name {
+  flex: 1;
   font-size: 18px;
   font-weight: 400;
   color: #fff;
@@ -119,13 +120,17 @@
 }
 
 .sidebar .nav-links li .sub-menu {
-  padding: 6px 6px 14px 60px;
   background: #404c50;
-  display: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
 }
 
 .sidebar .nav-links li.showMenu .sub-menu {
-  display: block;
+  max-height: 500px;
+  opacity: 1;
+  padding: 6px 6px 14px 60px;
 }
 
 .sidebar .nav-links li .sub-menu a {
