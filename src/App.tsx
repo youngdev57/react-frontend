@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "boxicons/css/boxicons.min.css";
 import MainPage from "./pages/MainPage";
 import "./styles/reset.css";
 import "./styles/global.css";
