@@ -29,6 +29,7 @@ function App() {
             path="modules/thumbnail-manager"
             element={<ThumbnailManager />}
           />
+          <Route path="modules/region" element={<Region />} />
           <Route path="modules/region-manager" element={<Region />} />
           <Route path="common/form" element={<Form />} />
           <Route path="common/grid" element={<Grid />} />
